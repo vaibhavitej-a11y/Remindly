@@ -1,101 +1,64 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TaskFlow README</title>
+# TaskFlow
 
-  <style>
-    body{
-      font-family: Arial, sans-serif;
-      background:#f5f5f5;
-      color:#222;
-      padding:40px;
-      line-height:1.6;
-    }
+A clean and minimal productivity app focused on simple task logging, reminder scheduling, and calendar organization.
 
-    .container{
-      max-width:800px;
-      margin:auto;
-      background:white;
-      padding:30px;
-      border-radius:12px;
-    }
+## Features
 
-    h1,h2{
-      margin-top:0;
-    }
+* Quick task creation
+* Event and reminder scheduling
+* Monthly calendar view
+* Daily agenda view
+* Local reminder notifications
+* Clean and distraction-free UI
+* Mobile-first design
+* Dark/light mode
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:15px;
-    }
+## Goals
 
-    th,td{
-      border:1px solid #ddd;
-      padding:12px;
-      text-align:left;
-    }
+TaskFlow is designed to be:
 
-    th{
-      background:#eee;
-    }
+* lightweight
+* fast
+* simple to use daily
+* clutter-free
+* focused only on core productivity features
 
-    ul{
-      padding-left:20px;
-    }
-  </style>
-</head>
+## Tech Stack
 
-<body>
-  <div class="container">
+* Frontend: React Native / Flutter
+* Local Notifications
+* Local Storage / SQLite
+* Mobile-first UI
 
-    <h1>TaskFlow</h1>
+## Screens
 
-    <p>
-      A clean and minimal productivity app for task logging,
-      reminders, and calendar organization.
-    </p>
+* Home Dashboard
+* Task List
+* Add Task/Event Modal
+* Calendar View
+* Daily Agenda
+* Reminder Notifications
 
-    <h2>Features</h2>
+## Design Inspiration
 
-    <table>
-      <tr>
-        <th>Feature</th>
-        <th>Description</th>
-      </tr>
+Inspired by:
 
-      <tr>
-        <td>Tasks</td>
-        <td>Create and manage tasks quickly</td>
-      </tr>
+* TickTick
+* Todoist
+* Google Calendar
 
-      <tr>
-        <td>Reminders</td>
-        <td>Get reminder notifications for tasks/events</td>
-      </tr>
+## Project Philosophy
 
-      <tr>
-        <td>Calendar</td>
-        <td>View tasks and events in calendar format</td>
-      </tr>
-    </table>
+This project prioritizes:
 
-    <h2>Tech Stack</h2>
+* simplicity
+* usability
+* speed
+* minimal friction
+* clean user experience
 
-    <ul>
-      <li>React Native / Flutter</li>
-      <li>Local Notifications</li>
-      <li>SQLite / Local Storage</li>
-    </ul>
+No unnecessary features, social systems, or productivity overload.
 
-    <h2>Status</h2>
+## Status
 
-    <p>Currently building MVP version.</p>
-
-  </div>
-</body>
-</html>
-```
+Currently in MVP development.
