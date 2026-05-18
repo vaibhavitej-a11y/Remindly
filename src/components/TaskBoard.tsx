@@ -53,7 +53,7 @@ export default function TaskBoard({
         </motion.button>
         <div className="text-center">
           <h1 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Plan</h1>
-          <p className="font-bold truncate max-w-[200px]">{event.name}</p>
+          <p className="font-bold truncate max-w-[200px]">{event.title}</p>
         </div>
         <motion.div layout className="w-9" />
       </header>

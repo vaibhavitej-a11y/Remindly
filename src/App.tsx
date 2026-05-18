@@ -5,7 +5,8 @@ import { AppStoreProvider, useAppStore } from './hooks/useAppStore';
 import EventDashboard from './components/EventDashboard';
 import HomeView from './components/HomeView';
 import CalendarView from './components/CalendarView';
-import { requestNotificationPermission, startNotificationScheduler } from './lib/notifications';
+import { startForegroundNotificationScheduler } from './lib/notifications';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function AppContent() {
   const { data } = useAppStore();
@@ -13,19 +14,11 @@ function AppContent() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
-    requestNotificationPermission();
-  }, []);
-
-  useEffect(() => {
-    return startNotificationScheduler(() => data);
+    return startForegroundNotificationScheduler(() => data);
   }, [data]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="h-screen flex flex-col bg-[#FAFAFA] text-[#1A1A1A] font-sans overflow-hidden"
-    >
+    <div className="h-screen flex flex-col bg-[#FAFAFA] text-[#1A1A1A] font-sans overflow-hidden">
       <header className="h-16 flex items-center justify-between px-6 bg-white border-b border-slate-100 flex-shrink-0 z-50">
         <motion.div
           initial={{ opacity: 0, x: -8 }}
@@ -206,7 +199,7 @@ function AppContent() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -235,8 +228,10 @@ function NavButton({
 
 export default function App() {
   return (
-    <AppStoreProvider>
-      <AppContent />
-    </AppStoreProvider>
+    <ErrorBoundary>
+      <AppStoreProvider>
+        <AppContent />
+      </AppStoreProvider>
+    </ErrorBoundary>
   );
 }

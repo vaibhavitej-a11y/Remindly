@@ -17,13 +17,7 @@ function wasNotified(key: string): boolean {
 
 function notify(title: string, body: string): void {
   if (!canNotify()) return;
-  new Notification(title, { body, tag: `${title}-${body}`.slice(0, 32) });
-}
-
-export function requestNotificationPermission(): void {
-  if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
-  }
+  new Notification(title, { body, tag: `${title}-${body}`.slice(0, 32), icon: '/icon.svg' });
 }
 
 export function checkEventNotifications(events: Event[]): void {
@@ -33,12 +27,13 @@ export function checkEventNotifications(events: Event[]): void {
   const today = startOfDay(now);
 
   events.forEach((event) => {
-    const eventDate = parseISO(event.date.includes('T') ? event.date : `${event.date}T09:00:00`);
+    const time = event.startTime || '09:00';
+    const eventDate = parseISO(event.date.includes('T') ? event.date : `${event.date}T${time}:00`);
 
     if (isSameDay(eventDate, today)) {
       const key = `remindly-event-today-${event.id}-${event.date}`;
       if (!wasNotified(key)) {
-        notify('Event today', `"${event.name}" is scheduled for today.`);
+        notify('Event today', `"${event.title}" is scheduled for today.`);
         markNotified(key);
       }
     }
@@ -47,7 +42,7 @@ export function checkEventNotifications(events: Event[]): void {
     if (minutesUntil > 0 && minutesUntil <= 60) {
       const key = `remindly-event-soon-${event.id}-${event.date}`;
       if (!wasNotified(key)) {
-        notify('Event starting soon', `"${event.name}" is in about ${minutesUntil} minutes.`);
+        notify('Event starting soon', `"${event.title}" is in about ${minutesUntil} minutes.`);
         markNotified(key);
       }
     }
@@ -57,12 +52,12 @@ export function checkEventNotifications(events: Event[]): void {
 export function checkTaskNotifications(data: AppData): void {
   if (!canNotify()) return;
 
-  const eventMap = new Map(data.events.map((e) => [e.id, e.name]));
+  const eventMap = new Map(data.events.map((e) => [e.id, e.title]));
 
   data.tasks
     .filter((t) => t.status !== 'completed' && (t.priority === 'urgent' || t.priority === 'high'))
     .forEach((task) => {
-      const key = `remindly-task-${task.id}-${task.priority}`;
+      const key = `remindly-task-live-${task.id}-${task.priority}`;
       if (wasNotified(key)) return;
       const project = eventMap.get(task.eventId) ?? 'a project';
       notify(
@@ -73,13 +68,13 @@ export function checkTaskNotifications(data: AppData): void {
     });
 }
 
-export function runNotificationChecks(data: AppData): void {
+export function runForegroundNotificationChecks(data: AppData): void {
   checkEventNotifications(data.events);
   checkTaskNotifications(data);
 }
 
-export function startNotificationScheduler(getData: () => AppData): () => void {
-  const tick = () => runNotificationChecks(getData());
+export function startForegroundNotificationScheduler(getData: () => AppData): () => void {
+  const tick = () => runForegroundNotificationChecks(getData());
   tick();
   const id = window.setInterval(tick, CHECK_INTERVAL_MS);
   return () => window.clearInterval(id);

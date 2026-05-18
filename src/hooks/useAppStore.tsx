@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { syncBackgroundNotifications } from '../lib/backgroundNotifications';
 import { createId, loadData, saveData } from '../lib/storage';
 import type { AppData, Event, EventStatus, Task, TaskPriority, TaskStatus } from '../lib/types';
 
@@ -23,6 +24,11 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     saveData(data);
+    if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+      syncBackgroundNotifications(data).catch(() => {
+        // Non-fatal: app works without background scheduling
+      });
+    }
   }, [data]);
 
   const events = useMemo(

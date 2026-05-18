@@ -11,6 +11,7 @@ import {
   formatPriorityLabel,
 } from '../lib/selectors';
 import PriorityFeedModal from './PriorityFeedModal';
+import NotificationSetup from './NotificationSetup';
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -46,6 +47,8 @@ export default function HomeView({
         </p>
         <h1 className="text-3xl font-bold tracking-tight">{getGreeting()}</h1>
       </header>
+
+      <NotificationSetup />
 
       <div className="grid grid-cols-2 gap-4">
         <motion.button
@@ -198,8 +201,15 @@ export default function HomeView({
                   </span>
                 </motion.div>
                 <motion.div layout className="flex-1 min-w-0">
-                  <h4 className="font-bold truncate">{event.name}</h4>
-                  <p className="text-xs text-slate-400 font-medium">{event.location}</p>
+                  <h4 className="font-bold truncate">{event.title}</h4>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {event.startTime && (
+                      <span className="text-xs text-slate-400 font-medium">
+                        {event.startTime}{event.endTime ? ` – ${event.endTime}` : ''}
+                      </span>
+                    )}
+                    {event.description && <span className="text-xs text-slate-400 font-medium truncate">{event.description}</span>}
+                  </div>
                 </motion.div>
               </motion.div>
             ))

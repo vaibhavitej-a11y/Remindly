@@ -38,7 +38,7 @@ export interface PriorityItem {
 }
 
 function buildPriorityItems(data: AppData, tasks: Task[]): PriorityItem[] {
-  const eventMap = new Map(data.events.map((e) => [e.id, e.name]));
+  const eventMap = new Map(data.events.map((e) => [e.id, e.title]));
   return tasks.map((task) => ({
     task,
     eventName: eventMap.get(task.eventId) ?? 'Project',

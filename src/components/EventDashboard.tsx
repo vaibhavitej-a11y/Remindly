@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../hooks/useAppStore';
-import { Calendar, Trash2, ChevronRight, Plus, X, CheckSquare } from 'lucide-react';
+import { Calendar, Trash2, ChevronRight, Plus, X, CheckSquare, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import TaskBoard from './TaskBoard';
 
@@ -116,8 +116,16 @@ export default function EventDashboard() {
                 <CheckSquare className="w-6 h-6 text-slate-300 group-hover:text-[#3B82F6] transition-colors" />
               </motion.div>
               <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-lg tracking-tight truncate">{event.name}</h4>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{event.location}</p>
+                <h4 className="font-bold text-lg tracking-tight truncate">{event.title}</h4>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {event.startTime && (
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {event.startTime}{event.endTime ? ` – ${event.endTime}` : ''}
+                    </span>
+                  )}
+                  {event.description && <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest truncate">{event.description}</span>}
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -167,10 +175,11 @@ export default function EventDashboard() {
                     e.preventDefault();
                     const formData = new FormData(e.currentTarget);
                     addEvent({
-                      name: String(formData.get('name')),
+                      title: String(formData.get('title')),
                       date: String(formData.get('date')),
-                      location: String(formData.get('location')),
-                      description: '',
+                      startTime: String(formData.get('startTime') || '') || undefined,
+                      endTime: String(formData.get('endTime') || '') || undefined,
+                      description: String(formData.get('description') || ''),
                       status: 'planning',
                     });
                     setShowCreateModal(false);
@@ -179,16 +188,15 @@ export default function EventDashboard() {
                 >
                   <input
                     required
-                    name="name"
+                    name="title"
                     type="text"
-                    placeholder="Project Name"
+                    placeholder="Project Title"
                     className="w-full px-6 py-5 bg-slate-50/50 border-none rounded-3xl outline-none focus:ring-2 focus:ring-[#3B82F6] font-medium"
                   />
                   <input
-                    required
-                    name="location"
+                    name="description"
                     type="text"
-                    placeholder="Category (e.g. Work, Health)"
+                    placeholder="Description"
                     className="w-full px-6 py-5 bg-slate-50/50 border-none rounded-3xl outline-none focus:ring-2 focus:ring-[#3B82F6] font-medium"
                   />
                   <input
@@ -198,6 +206,24 @@ export default function EventDashboard() {
                     defaultValue={new Date().toISOString().slice(0, 10)}
                     className="w-full px-6 py-5 bg-slate-50/50 border-none rounded-3xl outline-none focus:ring-2 focus:ring-[#3B82F6] font-medium"
                   />
+                  <div className="flex gap-3">
+                    <div className="flex-1 relative">
+                      <label className="absolute top-2 left-6 text-[10px] font-bold uppercase tracking-widest text-slate-300">Start</label>
+                      <input
+                        name="startTime"
+                        type="time"
+                        className="w-full px-6 pt-7 pb-4 bg-slate-50/50 border-none rounded-3xl outline-none focus:ring-2 focus:ring-[#3B82F6] font-medium"
+                      />
+                    </div>
+                    <div className="flex-1 relative">
+                      <label className="absolute top-2 left-6 text-[10px] font-bold uppercase tracking-widest text-slate-300">End</label>
+                      <input
+                        name="endTime"
+                        type="time"
+                        className="w-full px-6 pt-7 pb-4 bg-slate-50/50 border-none rounded-3xl outline-none focus:ring-2 focus:ring-[#3B82F6] font-medium"
+                      />
+                    </div>
+                  </div>
                   <button
                     type="submit"
                     className="w-full py-5 bg-black text-white rounded-[32px] font-bold text-xs uppercase tracking-widest shadow-xl shadow-black/10 hover:bg-slate-800 transition-colors"

@@ -4,9 +4,10 @@ export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
 
 export interface Event {
   id: string;
-  name: string;
+  title: string;
   date: string;
-  location: string;
+  startTime?: string;   // HH:mm format, e.g. "09:00"
+  endTime?: string;     // HH:mm format, e.g. "17:00"
   description: string;
   status: EventStatus;
   createdAt: string;
