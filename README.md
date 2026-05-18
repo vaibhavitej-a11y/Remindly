@@ -1,41 +1,101 @@
-# Remindly
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaskFlow README</title>
 
-A clean Reminder and Event planner personalized to own needs and aids on self discipline.
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f5f5f5;
+      color:#222;
+      padding:40px;
+      line-height:1.6;
+    }
 
-## Features
+    .container{
+      max-width:800px;
+      margin:auto;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+    }
 
-- **Home** — live stats, priority feed (tap to open tasks), upcoming events
-- **Projects** — tasks with priorities (urgent, high, medium, low)
-- **Calendar** — month view and daily agenda
-- **Notifications** — browser alerts while the app is open (see below)
-- **Mobile-friendly** — works in phone browsers; add to home screen for an app-like feel
+    h1,h2{
+      margin-top:0;
+    }
 
-## Run locally
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:15px;
+    }
 
-```bash
-npm install
-npm run dev
+    th,td{
+      border:1px solid #ddd;
+      padding:12px;
+      text-align:left;
+    }
+
+    th{
+      background:#eee;
+    }
+
+    ul{
+      padding-left:20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>TaskFlow</h1>
+
+    <p>
+      A clean and minimal productivity app for task logging,
+      reminders, and calendar organization.
+    </p>
+
+    <h2>Features</h2>
+
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>Description</th>
+      </tr>
+
+      <tr>
+        <td>Tasks</td>
+        <td>Create and manage tasks quickly</td>
+      </tr>
+
+      <tr>
+        <td>Reminders</td>
+        <td>Get reminder notifications for tasks/events</td>
+      </tr>
+
+      <tr>
+        <td>Calendar</td>
+        <td>View tasks and events in calendar format</td>
+      </tr>
+    </table>
+
+    <h2>Tech Stack</h2>
+
+    <ul>
+      <li>React Native / Flutter</li>
+      <li>Local Notifications</li>
+      <li>SQLite / Local Storage</li>
+    </ul>
+
+    <h2>Status</h2>
+
+    <p>Currently building MVP version.</p>
+
+  </div>
+</body>
+</html>
 ```
-
-Open http://localhost:3000
-
-### Use on your phone (same Wi‑Fi)
-
-```bash
-npm run dev -- --host
-```
-
-On your phone, open `http://<your-computer-ip>:3000` (e.g. `http://192.168.1.5:3000`).
-
-For use anywhere, deploy the `dist` folder (after `npm run build`) to [Vercel](https://vercel.com), [Netlify](https://netlify.com), or GitHub Pages, then open that URL on mobile.
-
-## Notifications (important)
-
-Remindly uses **browser notifications**, not push servers.
-
-| What you get | Limitation |
-|--------------|------------|
-| Alert when an **event is today** | Only while the app tab is open (or recently used) |
-| Alert when an event is **within ~1 hour** | Checks every minute while the app is open |
-| Alert for new **urgent / high** tasks | Once per task per session |
-
