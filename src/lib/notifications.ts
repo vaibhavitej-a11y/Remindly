@@ -17,7 +17,18 @@ function wasNotified(key: string): boolean {
 
 function notify(title: string, body: string): void {
   if (!canNotify()) return;
-  new Notification(title, { body, tag: `${title}-${body}`.slice(0, 32), icon: '/icon.svg' });
+  const tag = `${title}-${body}`.slice(0, 32);
+  try {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.showNotification(title, { body, tag, icon: '/icon.svg' });
+      });
+    } else {
+      new Notification(title, { body, tag, icon: '/icon.svg' });
+    }
+  } catch {
+    // Notification not supported in this context — non-fatal
+  }
 }
 
 export function checkEventNotifications(events: Event[]): void {
