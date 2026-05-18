@@ -57,8 +57,4 @@ This project prioritizes:
 * minimal friction
 * clean user experience
 
-No unnecessary features, social systems, or productivity overload.
 
-## Status
-
-Currently in MVP development.
